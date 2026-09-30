@@ -1,8 +1,7 @@
-expense = []
-expense_cost = []
+expenses = []
 
 
-def add_expense(expense, expense_cost):
+def add_expense(expense):
     while True:
         try:
 
@@ -10,13 +9,31 @@ def add_expense(expense, expense_cost):
             if temp_expense.isdigit() == True:
                 print("Please Enter A Valid Respone(Text)")
                 continue
-            expense.append(temp_expense)
-            expense_cost.append(int(input("How Much was your expense?: ")))
+
+            expense_cost = float(input("How Much was your expense?: "))
+            if expense_cost < 0:
+                print("*******************************")
+                print("Please Enter A Positive Number")
+                print("*******************************")
+                continue
+            expenses.append({"description": temp_expense, "cost": expense_cost})
 
             break
 
         except ValueError:
             print("Please Enter A Number for your price")
+
+
+def show_expense(expenses):
+    print("--- All Expenses ---")
+
+    count = 1
+    for expense in expenses:
+
+        print(f"{count}. {expense['description']:<15}${expense['cost']:.2f}")
+        count += 1
+    print("\n")
+    print("--------------------")
 
 
 print("Welcome to Ensar's expense tracker")
@@ -27,22 +44,27 @@ while running == True:
         "1. Add An Expense\n"
         "2. View All Expenses\n"
         "3. Delete An Expense\n"
-        "View Totals\n"
-        "Quit\n"
+        "4. View Totals\n"
+        "5. Quit\n"
     )
 
     try:
         user_choice = int(input("What would you like to do for today?: "))
 
     except ValueError:
+        print("***********************************")
         print("Please make sure to enter a number")
+        print("***********************************")
+        continue
 
-    if user_choice > 5 or user_choice < 0:
+    if user_choice > 5 or user_choice <= 0:
+        print("*************************************")
         print("Please Select One Of The Five Options")
+        print("*************************************")
         continue
 
     match user_choice:
         case 1:
-            add_expense(expense, expense_cost)
-    print(expense)
-    print(expense_cost)
+            add_expense(expenses)
+        case 2:
+            show_expense(expenses)
