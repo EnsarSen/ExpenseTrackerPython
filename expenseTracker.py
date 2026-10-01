@@ -36,6 +36,35 @@ def show_expense(expenses):
     print("--------------------")
 
 
+def delete_expense(expenses):
+    expense_list = len(expenses)
+    while True:
+
+        if not expenses:
+            print("*****************")
+            print("No Expenses Found")
+            print("*****************")
+            break
+
+        try:
+            selected_expense = int(
+                input("Which expense would you like to remove?(select by number): ")
+            )
+
+        except ValueError:
+            print("Please Enter A Number")
+
+            continue
+        if expense_list < selected_expense:
+            print("**********************************")
+            print("Please select an available expense")
+            print("**********************************")
+            break
+
+        expenses.pop(selected_expense - 1)
+        break
+
+
 print("Welcome to Ensar's expense tracker")
 running = True
 while running == True:
@@ -53,7 +82,7 @@ while running == True:
 
     except ValueError:
         print("***********************************")
-        print("Please make sure to enter a number")
+        print("Please make sure to enter a WHOLE number(ex. 1, 2, 3, 4, 5)")
         print("***********************************")
         continue
 
@@ -68,3 +97,5 @@ while running == True:
             add_expense(expenses)
         case 2:
             show_expense(expenses)
+        case 3:
+            delete_expense(expenses)
