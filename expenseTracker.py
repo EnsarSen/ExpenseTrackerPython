@@ -25,15 +25,18 @@ def add_expense(expense):
 
 
 def show_expense(expenses):
+    expense_total = 0
     print("--- All Expenses ---")
 
     count = 1
     for expense in expenses:
 
         print(f"{count}. {expense['description']:<15}${expense['cost']:.2f}")
+        expense_total += expense["cost"]
         count += 1
     print("\n")
     print("--------------------")
+    print(f"Total {expense_total:<15}")
 
 
 def delete_expense(expenses):
@@ -73,8 +76,7 @@ while running == True:
         "1. Add An Expense\n"
         "2. View All Expenses\n"
         "3. Delete An Expense\n"
-        "4. View Totals\n"
-        "5. Quit\n"
+        "4. Quit\n"
     )
 
     try:
@@ -99,3 +101,5 @@ while running == True:
             show_expense(expenses)
         case 3:
             delete_expense(expenses)
+        case 4:
+            break
