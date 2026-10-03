@@ -1,7 +1,20 @@
+import json
+
 expenses = []
 
 
-def add_expense(expense):
+while True:
+    try:
+        with open("expenses.json", "r") as file:
+            expenses = json.load(file)
+            break
+    except FileNotFoundError:
+        break
+    except json.JSONDecodeError:
+        break
+
+
+def add_expense(expenses):
     while True:
         try:
 
@@ -17,7 +30,8 @@ def add_expense(expense):
                 print("*******************************")
                 continue
             expenses.append({"description": temp_expense, "cost": expense_cost})
-
+            with open("expenses.json", "w") as file:
+                json.dump(expenses, file)
             break
 
         except ValueError:
@@ -55,17 +69,24 @@ def delete_expense(expenses):
             )
 
         except ValueError:
+            print("**********************")
+            print("Please Enter A Number")
+            print("*********************")
+            break
+        except TypeError:
             print("Please Enter A Number")
 
-            continue
-        if expense_list < selected_expense:
+            break
+        if expense_list < selected_expense or -selected_expense:
             print("**********************************")
             print("Please select an available expense")
             print("**********************************")
             break
 
         expenses.pop(selected_expense - 1)
-        break
+        with open("expenses.json", "w") as file:
+            json.dump(expenses, file)
+            break
 
 
 print("Welcome to Ensar's expense tracker")
@@ -88,7 +109,7 @@ while running == True:
         print("***********************************")
         continue
 
-    if user_choice > 5 or user_choice <= 0:
+    if user_choice > 4 or user_choice <= 0:
         print("*************************************")
         print("Please Select One Of The Five Options")
         print("*************************************")
